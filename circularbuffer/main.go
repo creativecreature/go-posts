@@ -2,19 +2,18 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	"math/rand/v2"
 	"time"
 )
 
-var r = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 // producePrices is going to write 100 random stock prices to ch, and then close it.
 func producePrices(ch chan<- int) {
 	fmt.Println("The stock exchange has opened for the day.")
 	for i := 0; i < 100; i++ {
-		ch <- r.Intn(9999)
-		// To simulare bursts with price changes we'll add a random delay between 0 and 4ms.
-		time.Sleep(time.Duration(r.Intn(4)) * time.Millisecond)
+		ch <- rand.IntN(9999)
+		// To simulare bursts of price changes we'll add a random delay between 0 and 4ms.
+		time.Sleep(time.Duration(rand.IntN(4)) * time.Millisecond)
 	}
 	fmt.Println("The stock exchange is closing for the day.")
 	close(ch)
